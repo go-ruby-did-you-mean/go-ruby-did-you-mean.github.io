@@ -1,0 +1,31 @@
+baseURL = "https://go-ruby-did-you-mean.github.io/"
+title = "go-ruby-did-you-mean"
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[[params.phases]]
+  name = "Normalization"
+  status = "ready"
+  blurb = "Downcase and strip `@` sigils from input and every candidate, so `@ivar` and `IVar` compare alike — the first step of MRI's `SpellChecker#correct`."
+[[params.phases]]
+  name = "Jaro–Winkler filter & ranking"
+  status = "ready"
+  blurb = "Keep candidates whose Jaro–Winkler similarity clears the threshold (`0.834` for inputs longer than 3 characters, else `0.77`), drop an exact match of the original, and rank survivors by similarity descending — a stable sort then reverse, matching Ruby's tie order."
+[[params.phases]]
+  name = "Levenshtein mistype filter"
+  status = "ready"
+  blurb = "Keep the ranked candidates within an edit distance of `⌈len/4⌉` of the input, exactly as MRI's mistype filter does."
+[[params.phases]]
+  name = "Misspell fallback"
+  status = "ready"
+  blurb = "If nothing survives, return the first ranked candidate whose Levenshtein distance is strictly less than the shorter of the two word lengths — Ruby's stable-sorted, input-order fallback."
+[[params.phases]]
+  name = "Unicode-correct metrics"
+  status = "ready"
+  blurb = "`Jaro` / `JaroWinkler.distance` and `Levenshtein.distance` ported exactly, comparing Unicode code points (not bytes) like Ruby's `String#each_codepoint`, so multibyte words (`café`, `naïve`) rank identically."
+[[params.phases]]
+  name = "Differential oracle & coverage"
+  status = "ready"
+  blurb = "Golden vectors captured from MRI plus a broad corpus of typos, transpositions, case variants, multibyte words and no-match inputs fed to the system `ruby`'s `SpellChecker#correct`, reproduced byte-for-byte. 100% coverage, gofmt + go vet clean, green across all six 64-bit Go arches and three OSes."
