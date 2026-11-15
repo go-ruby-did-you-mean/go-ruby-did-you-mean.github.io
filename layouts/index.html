@@ -41,11 +41,9 @@
   <div class="hero"><div class="wrap">
     <div>
       <h1 class="head">go-ruby-did-you-mean</h1>
-      <p class="sub">Ruby's <code>did_you_mean</code> matcher in pure Go — Jaro–Winkler &amp; Levenshtein spelling suggestions, MRI byte-exact, no cgo.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="/docs/">{{ partial "icons/book.html" . }}Documentation</a>
-        <a class="btn btn-ghost" href="https://github.com/go-ruby-did-you-mean/did-you-mean">{{ partial "icons/github.html" . }}GitHub</a>
-      </div>
+      <p class="sub">Ruby's <code>did_you_mean</code> matcher in {{ if partial "mantra-on.html" . }}Go{{ else }}pure Go{{ end }} — Jaro–Winkler &amp; Levenshtein spelling suggestions, MRI byte-exact, {{ if not (partial "mantra-on.html" $) }}no cgo{{ end }}.</p>
+      {{/* [[params.cta]] in hugo.toml: the kit renders the row */}}
+      {{ partial "cta.html" . }}
       <div class="trust">{{ if not (partial "mantra-on.html" $) }}<span class="pill">pure Go · zero cgo</span>{{ end }}<span class="pill">did_you_mean-compatible</span><span class="pill">SpellChecker#correct</span><span class="pill">Jaro–Winkler</span><span class="pill">Levenshtein</span><span class="pill">Unicode code points</span><span class="pill">stable tie order</span><span class="pill">MRI byte-exact</span><span class="pill">100% coverage</span><span class="pill">6 arches</span></div>
       <div class="legacy"><div class="badges">
       <a href="/docs/"><img alt="Documentation (MkDocs Material + mike)" src="https://img.shields.io/badge/docs-mkdocs--material-9B1C2E"></a>
